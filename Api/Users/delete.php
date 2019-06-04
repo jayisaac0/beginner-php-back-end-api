@@ -16,7 +16,7 @@
 
 	try {
 		$data = json_decode(file_get_contents("php://input"));
-		$request->gandertech_public_id = $data->gandertech_public_id;
+		$request->public_id = $data->public_id;
 	  	$response = $request->delete();
 
 	} catch (HttpException $ex) {

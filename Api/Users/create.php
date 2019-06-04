@@ -17,13 +17,13 @@
 	try {
 		$data = json_decode(file_get_contents("php://input"));
 
-		$request->gandertech_public_id = $data->gandertech_public_id;
-		$request->gandertech_username = $data->gandertech_username;
-		$request->gandertech_user_email = $data->gandertech_user_email;
-		$request->gandertech_password = $data->gandertech_password;
-		$request->gandertech_occupation = $data->gandertech_occupation;
-    	$request->gandertech_gender = $data->gandertech_gender;
-    	$request->gandertech_dateofbirth = $data->gandertech_dateofbirth;
+		$request->public_id = $data->public_id;
+		$request->username = $data->username;
+		$request->user_email = $data->user_email;
+		$request->password = $data->password;
+		$request->occupation = $data->occupation;
+    	$request->gender = $data->gender;
+    	$request->dateofbirth = $data->dateofbirth;
 	  	$response = $request->post();
 
 	} catch (HttpException $ex) {

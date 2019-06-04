@@ -4,12 +4,12 @@
     class user {
     
         public $conn;
-        public $gandertech_user_id;
-        public $gandertech_public_id;
-        public $gandertech_username;
-        public $gandertech_user_email;
-        public $gandertech_password;
-        public $gandertech_registration_date;        
+        public $user_id;
+        public $public_id;
+        public $username;
+        public $user_email;
+        public $password;
+        public $registration_date;        
         
         public function __construct() {
             // make connection to the database.
@@ -63,30 +63,30 @@
         public function post() {
         // insert data into table
             try {
-                $gandertech_public_id = time();
-                $gandertech_username = $this->gandertech_username;
-                $gandertech_user_email = $this->gandertech_user_email;
-                $gandertech_password = password_hash($this->gandertech_password, PASSWORD_DEFAULT);
-                $gandertech_occupation = $this->gandertech_occupation;
-                $gandertech_gender = $this->gandertech_gender;
-                $gandertech_dateofbirth = $this->gandertech_dateofbirth;
+                $public_id = time();
+                $username = $this->username;
+                $user_email = $this->user_email;
+                $password = password_hash($this->password, PASSWORD_DEFAULT);
+                $occupation = $this->occupation;
+                $gender = $this->gender;
+                $dateofbirth = $this->dateofbirth;
 
-                if ($gandertech_public_id == "") { echo json_encode(array("alert"=>"Unavailable gandertech_public_id")); }
-                elseif ($gandertech_username == "") { echo json_encode(array("alert"=>"Unavailable gandertech_username")); }
-                elseif ($gandertech_user_email == "") { echo json_encode(array("alert"=>"Unavailable gandertech_user_email")); }
-                elseif ($gandertech_password == "") { echo json_encode(array("alert"=>"Unavailable gandertech_password")); }
-                elseif ($gandertech_occupation == "") { echo json_encode(array("alert"=>"Unavailable gandertech_occupation")); }
-                elseif ($gandertech_gender == "") { echo json_encode(array("alert"=>"Unavailable gandertech_gender")); }
-                elseif ($gandertech_dateofbirth == "") { echo json_encode(array("alert"=>"Unavailable gandertech_dateofbirth")); }
+                if ($public_id == "") { echo json_encode(array("alert"=>"Unavailable public_id")); }
+                elseif ($username == "") { echo json_encode(array("alert"=>"Unavailable username")); }
+                elseif ($user_email == "") { echo json_encode(array("alert"=>"Unavailable user_email")); }
+                elseif ($password == "") { echo json_encode(array("alert"=>"Unavailable password")); }
+                elseif ($occupation == "") { echo json_encode(array("alert"=>"Unavailable occupation")); }
+                elseif ($gender == "") { echo json_encode(array("alert"=>"Unavailable gender")); }
+                elseif ($dateofbirth == "") { echo json_encode(array("alert"=>"Unavailable dateofbirth")); }
                 else {
-                    $stmt = $this->conn->prepare("INSERT INTO gandertech_users(gandertech_public_id, gandertech_username, gandertech_user_email, gandertech_password, gandertech_occupation, gandertech_gender, gandertech_dateofbirth) VALUES(:gandertech_public_id, :gandertech_username, :gandertech_user_email, :gandertech_password, :gandertech_occupation, :gandertech_gender, :gandertech_dateofbirth)");
-                    $stmt->bindparam("gandertech_public_id", $gandertech_public_id); 
-                    $stmt->bindparam("gandertech_username", $gandertech_username);
-                    $stmt->bindparam("gandertech_user_email", $gandertech_user_email);
-                    $stmt->bindparam("gandertech_password", $gandertech_password);
-                    $stmt->bindparam("gandertech_occupation", $gandertech_occupation);
-                    $stmt->bindparam("gandertech_gender", $gandertech_gender);
-                    $stmt->bindparam("gandertech_dateofbirth", $gandertech_dateofbirth);
+                    $stmt = $this->conn->prepare("INSERT INTO users(public_id, username, user_email, password, occupation, gender, dateofbirth) VALUES(:public_id, :username, :user_email, :password, :occupation, :gender, :dateofbirth)");
+                    $stmt->bindparam("public_id", $public_id); 
+                    $stmt->bindparam("username", $username);
+                    $stmt->bindparam("user_email", $user_email);
+                    $stmt->bindparam("password", $password);
+                    $stmt->bindparam("occupation", $occupation);
+                    $stmt->bindparam("gender", $gender);
+                    $stmt->bindparam("dateofbirth", $dateofbirth);
                     
                     if($stmt->execute()) {
                         echo json_encode(array("status"=>"200", "message"=>"successful"));
@@ -104,9 +104,9 @@
         public function get() {
         //get database values from table
             try {
-                $gandertech_public_id = $this->gandertech_public_id;
+                $public_id = $this->public_id;
                 
-                $stmt = $this->conn->prepare("SELECT `gandertech_users`.`gandertech_public_id`, `gandertech_users`.`gandertech_username`, `gandertech_users`.`gandertech_user_email`, `gandertech_users`.`gandertech_password`, `gandertech_users`.`gandertech_registration_date` FROM gandertech_users");
+                $stmt = $this->conn->prepare("SELECT `users`.`public_id`, `users`.`username`, `users`.`user_email`, `users`.`password`, `users`.`registration_date` FROM users");
                 if($stmt->execute()) {
                     $num = $stmt->rowCount();
                     if($num > 0) {
@@ -116,7 +116,7 @@
                         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             extract($row);
 
-                            $items = array("status" => "200", "gandertech_public_id" => $gandertech_public_id, "gandertech_username" => $gandertech_username, "gandertech_user_email" => $gandertech_user_email, "gandertech_password" => $gandertech_password);
+                            $items = array("status" => "200", "public_id" => $public_id, "username" => $username, "user_email" => $user_email, "password" => $password);
 
                             array_push($args['all_user_data'], $items);
                         }
@@ -135,9 +135,9 @@
         public function single_get() {
         //get database values from table
             try {
-                $gandertech_public_id = $this->gandertech_public_id;
+                $public_id = $this->public_id;
                 
-                $stmt = $this->conn->prepare("SELECT `gandertech_users`.`gandertech_public_id`, `gandertech_users`.`gandertech_username`, `gandertech_users`.`gandertech_user_email`, `gandertech_users`.`gandertech_password`, `gandertech_users`.`gandertech_registration_date` FROM gandertech_users WHERE `gandertech_users`.`gandertech_public_id`='$gandertech_public_id' ");
+                $stmt = $this->conn->prepare("SELECT `users`.`public_id`, `users`.`username`, `users`.`user_email`, `users`.`password`, `users`.`registration_date` FROM users WHERE `users`.`public_id`='$public_id' ");
                 if($stmt->execute()) {
                     $num = $stmt->rowCount();
                     if($num > 0) {
@@ -147,7 +147,7 @@
                         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             extract($row);
 
-                            $items = array("status" => "200", "gandertech_public_id" => $gandertech_public_id, "gandertech_username" => $gandertech_username, "gandertech_user_email" => $gandertech_user_email, "gandertech_password" => $gandertech_password);
+                            $items = array("status" => "200", "public_id" => $public_id, "username" => $username, "user_email" => $user_email, "password" => $password);
 
                             array_push($args['single_user'], $items);
                         }
@@ -166,16 +166,16 @@
         public function put() {
         // update database table
             try {
-                $gandertech_public_id = $this->gandertech_public_id;
-                $gandertech_username = $this->gandertech_username;
-                $gandertech_user_email = $this->gandertech_user_email;
-                $gandertech_password = password_hash($this->gandertech_password, PASSWORD_DEFAULT);
+                $public_id = $this->public_id;
+                $username = $this->username;
+                $user_email = $this->user_email;
+                $password = password_hash($this->password, PASSWORD_DEFAULT);
                 
-                $stmt = $this->conn->prepare("UPDATE `gandertech_users` SET `gandertech_users`.`gandertech_username` = :gandertech_username, `gandertech_users`.`gandertech_user_email` = :gandertech_user_email, `gandertech_users`.`gandertech_password` = :gandertech_password WHERE `gandertech_users`.`gandertech_public_id` = :gandertech_public_id ");
-                $stmt->bindparam("gandertech_public_id", $gandertech_public_id);
-                $stmt->bindparam("gandertech_username", $gandertech_username);
-                $stmt->bindparam("gandertech_user_email", $gandertech_user_email);
-                $stmt->bindparam("gandertech_password", $gandertech_password);
+                $stmt = $this->conn->prepare("UPDATE `users` SET `users`.`username` = :username, `users`.`user_email` = :user_email, `users`.`password` = :password WHERE `users`.`public_id` = :public_id ");
+                $stmt->bindparam("public_id", $public_id);
+                $stmt->bindparam("username", $username);
+                $stmt->bindparam("user_email", $user_email);
+                $stmt->bindparam("password", $password);
                 
                 if($stmt->execute()) {
                     $num = $stmt->rowCount();
@@ -195,9 +195,9 @@
         public function delete(){
         // delete database row.
             try {
-                $gandertech_public_id = $this->gandertech_public_id;
+                $public_id = $this->public_id;
                 
-                $stmt = $this->conn->prepare("DELETE FROM `gandertech_users` WHERE `gandertech_users`.`gandertech_public_id` = :gandertech_public_id ");
+                $stmt = $this->conn->prepare("DELETE FROM `users` WHERE `users`.`public_id` = :public_id ");
                 //$stmt->bindparam(":1", $id);
                 if($stmt->execute()) {
 

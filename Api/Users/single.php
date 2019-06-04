@@ -13,7 +13,7 @@
 	));
 
 	try {
-		$request->gandertech_public_id = isset($_GET['gandertech_public_id']) ? $_GET['gandertech_public_id'] : die();
+		$request->public_id = isset($_GET['public_id']) ? $_GET['public_id'] : die();
 	  	$response = $request->single_get();
 	} catch (HttpException $ex) {
 	  echo $ex;

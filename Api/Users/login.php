@@ -24,8 +24,8 @@
 
 	try {
 		$data = json_decode(file_get_contents("php://input"));
-		$request->gandertech_username = $data->gandertech_username;
-		$request->gandertech_password = $data->gandertech_password;
+		$request->username = $data->username;
+		$request->password = $data->password;
 	  	$response = $request->generate_token();
 
 	} catch (HttpException $ex) {
