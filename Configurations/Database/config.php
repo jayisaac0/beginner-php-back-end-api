@@ -1,8 +1,9 @@
 <?php
 class Database
 {   
+	
     private $gandertech_host = "localhost";
-    private $gandertech_db_name = "gandertech";
+    private $gandertech_db_name = "";
     private $gandertech_username = "root";
     private $gandertech_password = "";
     public $conn;
